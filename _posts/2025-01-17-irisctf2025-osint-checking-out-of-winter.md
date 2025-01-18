@@ -1,8 +1,8 @@
 ---
 title: IrisCTF2025 - OSINT - Checking Out of Winter
-date: 2025-01-17 15:00:00 +0100
+date: 2025-01-17 18:00:00 +0100
 categories: [CTFs, IrisCTF2025]
-tags: [ctf, irisctf2025, osint]     # TAG names should always be lowercase
+tags: [ctf, irisctf2025, osint]
 description: Let's find out where Adam stayed !
 author: <author_id>
 
@@ -11,6 +11,7 @@ image:
 ---
 
 ## Challenge description 
+
 > We took our annual road trip to Baja California Sur to visit the beach and play some golf. I like how this location is farther from the city compared to other resorts. I really enjoyed the sweet and savory sauce on the pizza with shredded chicken. After eating, I fell asleep, and half of my legs ended up getting tanned.  
 >  
 > *Question: Which hotel did Adam stay at?*
@@ -18,11 +19,12 @@ image:
 > *By: Lychi*
 {: .prompt-info }
 
+**Flag : `irisctf{hilton_los_cabos_beach_and_golf_resort}`**
+
 ## Ressources
 
 For this challenge, we were given access to Adam Holmes' food blog, which features various articles with photos, reviews of places he visited, and food he tried. One of the articles shared the same name as the challenge, so we quickly guessed it is the one we should focus on.  
 → The website could be accessed with the [following URL](https://osint-food-blog-web.chal.irisc.tf/).
-
 
 The article's description matched the challenge description. Additionally, we were provided with the following image : 
 
@@ -74,14 +76,12 @@ One interesting detail about hotels, particularly large chains like Hilton, is t
 
 ![Image of the lounge chair I assume the picture was taken.](/assets/img/irisctf2025/osint/checking_out_of_winter/adams_chair.png){: w="500"}
 
-Unfortunately, identifying the exact lounge chair wasn’t part of the challenge, so I’ll never know if I was correct—unless Adam himself confirms it!
+Unfortunately, identifying the exact lounge chair wasn’t part of the challenge, so I’ll never know if I was correct—unless Adam himself confirms it !
 
 ## Conclusion 
 
 And that’s how I discovered that the hotel Adam stayed at was *Hilton Los Cabos* ! This challenge was relatively easy but very engaging. With a bit of luck, it could even have been solved in just one Google Image lookup. It highlights how much information a single picture can reveal and serves as a valuable reminder to be cautious about what we share online.
 
-Thank you for reading my writeup ! I hope it was clear and helpful. Feel free to share your feedback—this is my first writeup, and I’m eager to improve my writing and explanations. See you in the next one!
+Thank you for reading my writeup ! I hope it was clear and helpful. Feel free to share your feedback—this is my first writeup, and I’m eager to improve my writing and explanations. See you in the next one ! 
 
 *emree1*
-
-
