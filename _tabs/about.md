@@ -25,4 +25,4 @@ order: 4
 | *September 2024* | **Introduction to Cyber Security** | TryHackMe | [View](/assets/certificates/thm_introToCyber.pdf)        |
 | *September 2024* | **Pre Security**                   | TryHackMe | [View](/assets/certificates/thm_presecurity.pdf)         |
 | *June 2024*      | **IBM Cybersecurity Fundamentals** | Coursera  | [View](/assets/certificates/ibm_cybersecurity.pdf)       |
-| *July 2023*      | **Google Cybersecurity**           | Coursera  | [View](assets/certificates/google_cybersecurity.pdf)     |
+| *July 2023*      | **Google Cybersecurity**           | Coursera  | [View](/assets/certificates/google_cybersecurity.pdf)    |
