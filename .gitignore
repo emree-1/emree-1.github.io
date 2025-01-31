@@ -25,3 +25,6 @@ package-lock.json
 # Misc
 _sass/vendors
 assets/js/dist
+
+# posts
+_posts/2025-01-31-keyword-search.md
