@@ -43,7 +43,7 @@ To tackle this challenge, I opted for `Splunk’s` free version, as it offers a 
 
 ## Resolution
 
-### First analysis 
+### Initial Analysis 
 
 So let's look at the logs we got there !
 

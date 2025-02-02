@@ -36,7 +36,7 @@ We don’t need any sophisticated tools to solve this challenge; a web browser w
 
 ## Resolution
 
-### First analysis 
+### Initial Analysis 
 
 Our goal is to identify the name of the hotel mentioned in the description. Fortunately, the description provides us with some useful information about the location :
 - It is located in **`Baja California Sur`**, a state in Mexico.

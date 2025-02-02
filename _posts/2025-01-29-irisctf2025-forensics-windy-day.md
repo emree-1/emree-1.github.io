@@ -33,7 +33,7 @@ I wasn't able to solve this challenge during the irisCTF 2025 event. I installed
 
 However, I wanted to apply a real-world forensic investigation methodology, rather than just extracting the flag as quickly as possible. This write-up is highly detailed and documents the structured approach I developed to solve this challenge.  
 
-### First analysis 
+### Initial Analysis 
 
 Since we are dealing with a memory capture, our first instinct is to use `Volatility3`, a powerful framework that provides various plugins for memory analysis.
 
