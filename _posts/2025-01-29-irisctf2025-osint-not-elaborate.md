@@ -1,6 +1,6 @@
 ---
 title: IrisCTF2025 - OSINT - Not Eelaborate 
-date: 2025-01-19 18:00:00 +0100
+date: 2025-01-20 18:00:00 +0100
 categories: [CTFs, IrisCTF2025]
 tags: [ctf, irisctf2025, osint]
 description: Adam’s Unagi, our biggest clue. 
