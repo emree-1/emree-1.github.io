@@ -1,8 +1,8 @@
 ---
 title: Tool - Volatility3 Process Summarizer
 date: 2025-01-30 18:00:00 +0100
-categories: [Tool, Forensics]
-tags: [tool, forensics, volatility3]
+categories: [Tools, Forensics]
+tags: [tools, forensics, volatility3]
 description: Summarizer for Volatility3's PsList and PsScan modules.
 author: <author_id>
 

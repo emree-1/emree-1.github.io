@@ -82,7 +82,7 @@ At this point, I searched for a plugin capable of extracting files from the dump
 A common technique used by forensic analysts is to run the `strings` command on the memory dump. This extracts all readable ASCII and Unicode strings, which can then be manually analyzed for useful information.
 
 ```bash 
-strings pid.3026.dmp > firefox_strings.txt
+strings pid.3036.dmp > firefox_strings.txt
 ```
 
 Given that the raw strings output contains nearly **7 million lines**, manually reviewing them is impractical. Instead, we can leverage a key piece of knowledge: in CTF challenges, flags usually follow a specific format. In this case, all flags start with `irisctf`. Using this information, we can refine our search and extract only relevant strings, significantly reducing the amount of data to analyze.
