@@ -3,7 +3,7 @@ title: IrisCTF2025 - Forensics - Deldeldel
 date: 2025-01-21 18:00:00 +0100
 categories: [CTFs, IrisCTF2025]
 tags: [ctf, irisctf2025, forensics]
-description: xxxx
+description: Wireshark, USB traffic, and a hidden keylogger.
 author: <author_id>
 
 image:
@@ -23,43 +23,49 @@ image:
 
 ## Ressources
 
-For this challenge we were given a .pcapng file named "klogger.pcapng". Looking at it, it was only containing USB protocol trafic. 
+For this challenge, we were given a `.pcapng` file named `klogger.pcapng`. Upon inspection, we found that it contains only USB protocol traffic.
 
 ## Tools 
 
-We will mainly be using Wireshark to analyse this .pcapng file.  
-We will also use custom python scripts in order to parse some keyboard strokes. 
+We will primarily use `Wireshark` to analyze the `.pcapng` file.  
+Additionally, we will use custom `Python` scripts to parse and reconstruct keyboard strokes from the captured USB packets.
 
 ## Resolution
 
 ### Initial Analysis 
 
-First we will look at some general information about the trafic inside the capture file. To do so we will use the Statistics provided by Wireshark. 
+Before diving into deeper analysis, we first inspect the general structure of the captured traffic. To do so, we leverage `Wireshark’s` built-in statistics tools.
 
-Looking at the protocol hierarchy section, we can see that this pcapng file only contains USB packets. This will make our analysis easier as USB communications are pretty straight forward.
+By checking the `Protocol Hierarchy` section, we confirm that the capture file exclusively contains USB packets, which simplifies our analysis since USB communications follow a structured and predictable format.
 
-> Indeed, USB is using a master-slave approach where the host is requesting connected USB devices for data, and then the connected devices can reply. If a USB device tries to send data without the host asking for it, the packet is not handled by the OS. 
-{: .prompt-info}  
+> **Understanding USB Communication**   
+> USB operates on a master-slave architecture, where the master (host) periodically polls connected devices for data.
+A USB device cannot send data autonomously; it must wait for the host to request it.  
+> If a device attempts to send data without being polled, the packet is ignored by the operating system.
+{: .prompt-tip}  
 
 ![xxx](/assets/img/irisctf2025/forensics/deldeldel/protocol_hierarchy.png)
 
-Now that we know this packet contains only USB trafic, now we need to know who is exchanging with who. To do this, we can have a look at the Endpoints listing. 
+Now that we have confirmed that the capture file contains only USB traffic, our next step is to identify the communicating entities. To do this, we examine the `Endpoints` listing in `Wireshark`.
 
 ![xxx](/assets/img/irisctf2025/forensics/deldeldel/endpoints.png)
 
-We can see several USB devices 1.3.2, 1.5.1, 1.5.2, 1.7.1, 1.7.2 and the host listed as endpoints. 
+From this list, we observe several USB devices communicating with the host: `1.3.2`, `1.5.1`, `1.5.2`, `1.7.1`, `1.7.2`.
 
 ### Device types
 
-To have more information for each device we can look at the packets they transmit. Based on there length and there structure, we can try to deduce the device type sending the data. 
+To infer the type of each device, we analyze the packets they transmit. By examining the length and structure of the transferred data, we can make an educated guess about the nature of the connected peripherals.
 
-Looking through the transmistted USB packets, we can see two types of transfer : 
-- URB_BULK : mainly used to transfer heavy packets, especially useful for external USBstoreage devices (usb keys, hard drives, SSDs).
-- URB_INTERRUPT : mainly used with HID devices, such as a keyboard or a mouse. 
+A closer look at the captured USB packets reveals two types of transfer modes:
+- `URB_BULK`: used for transferring large amounts of data, mainly by USB storage devices (e.g., flash drives, external hard disks, SSDs).
+- `URB_INTERRUPT`: primarily used by Human Interface Devices (HID) such as keyboards and mice, which require low-latency, event-driven communication.
 
-Using the filter usb.transfer_type == "URB_BULK" and looking at the listed Endpoints, we see ther eis only one endpoint appering 1.7.2 (and the host). So this is the only device using "URB_BULK" type of transfers. 
 
-Using the filter usb.transfer_type == "URB_INTERRUPT" we can see that all the other devies are listed. 
+Using Wireshark’s USB transfer type filter, we can isolate and classify the devices:
+- Applying the filter `usb.transfer_type == "URB_BULK"`, we see that only one endpoint (`1.7.2`) appears, alongside the host. This suggests that 1.7.2 is a USB storage device.
+- Applying the filter `usb.transfer_type == "URB_INTERRUPT"`, we observe that all other devices are listed.
+
+Since HID peripherals (keyboards, mice, game controllers, etc.) use interrupt transfers, this indicates that one of these devices might be a keyboard—which is relevant given the challenge’s context.
 
 ### Keylogger?
 
@@ -71,56 +77,80 @@ Based on the HID specifications it is actually pretty easy to spot a USB keyboar
 - If a keyboard is used by a human, the device should sometimes send some empty reports.
 - Each keypress is represented by a scancode, the association between scancode and value is defined by the USB HID standards.
 
-It is pretty easy to spot a USB keyboards manually, we need to apply the filter usb.data_len == 8 to filter based on length of the actual data carried by the packet. 
+The filename `klogger.pcapng` suggests that this capture involves keylogging, meaning at least one of the USB devices should be a keyboard.
 
-Based on our filtering we can see that only two devices are concerned by this length of packet sent.
+According to the HID (Human Interface Device) specifications, USB keyboards follow a predictable structure that makes them relatively easy to identify. A valid USB keyboard exhibits the following characteristics:
+- Each data transfer is exactly `8` bytes long.
+- The second byte is always `0x00`, as it is a reserved byte.
+- Empty reports (all bytes set to `0x00`) appear periodically, as a real user does not press keys continuously.
+- Keystrokes are encoded using `scancodes`, following the USB HID standard, where each scancode corresponds to a specific key on a standard keyboard.
 
-> Image
+![xxx](/assets/img/irisctf2025/forensics/deldeldel/keyboard_report_structure.png)
 
-Looking at the data sent by the device 1.3.2, it doesn't seem to valid keybord as keyboard scancodes ends at E7 and scancodes from E8 to FFFF are actually reserved. 
+Since USB keyboards always send 8-byte HID reports, we can filter the packets using Wireshark with:
+```bash
+usb.data_len == 8
+```
+Applying this filter, we identify two devices transmitting packets of this length:  
+![xxx](/assets/img/irisctf2025/forensics/deldeldel/endpoints_filtered.png)
 
-> Image
+To determine which of these devices is an actual keyboard, we inspect the transmitted data.
+**Device `1.3.2`**: The packet contents do not conform to standard HID keyboard scancodes.  
+In the USB HID specification, valid scancodes range from 0x00 to 0xE7. Scancodes from 0xE8 to 0xFFFF are reserved and should not appear in keyboard reports. The data from `1.3.2` contains invalid scancodes, meaning it is unlikely to be a keyboard.  
 
-So we can assume the device 1.3.2 is probably not a keyboard. Now looking at the device 1.5.1, we see some more interesting data captures.
+![xxx](/assets/img/irisctf2025/forensics/deldeldel/1-3-2_packet.png)
 
-> Image
+**Device `1.5.1`**: The data appears more structured, aligning with expected keyboard report formats. This suggests that `1.5.1` is a USB keyboard and likely the one being logged by the keylogger.
+
+![xxx](/assets/img/irisctf2025/forensics/deldeldel/1-5-1_packet.png)
 
 This fits way more the structure of data sent by a keyboard. To be sure we can check for all the properties we mentionned previouvly : 
 
-1. All the data packets transmitted by device 1.5.1 have a length of 8 bytes.
-2. All the data packets transmitted by device 1.5.1 have the second byte equal to 0x00.
+1. All the data packets transmitted by device `1.5.1` have a length of 8 bytes.
+2. All the data packets transmitted by device `1.5.1` have the second byte equal to 0x00.
 3. And this devices sends sometimes some empty keywoards, representing that there is no key pressed by the user. 
 
-Based on all the information I gathered about USB protocol and USB keyboard, I decided to create a python script in order to automate the USB keyboard reconnaissance phase. You can look at the guide to see how you can use it, or find the source code on my Github.  
+To automate the detection of USB keyboards in a capture file, I wrote a Python script that performs this recognition phase. You can refer to the [guide](https://emree-1.github.io/posts/KBDscan/) for instructions on how to use it or find the source code on my [GitHub](https://github.com/emree-1/tools).
+
+```bash
+python3 KBDscan.py klogger.pcapng
+
+# === OUTPUT ===
+1.5.1
+```
 
 ### Extracting information from the keylogger
 
-Assuming device 1.5.1 is indeed the USB keyboard, we would like to know which keys have been pressed by the user, maybe it is hiding some secrects ?
+Assuming that device  `1.5.1`  is the keyboard, the next step is to determine which keys were pressed. The captured keystrokes may contain sensitive information, such as passwords or flags.
 
-There is a lot of scripts online allowing to do that, you just need to search for "usb keyboard ctf on:github", I opted to choose the one from TeamRocketIst.
+There are many existing scripts available online to decode USB keyboard captures. A quick search for `usb keyboard ctf` reveals several useful tools. I personally decided to use [TeamRocketIst’s script](https://github.com/TeamRocketIst/ctf-usb-keyboard-parser/tree/master) for this purpose.
 
-Following the instructions on there README, first i extracted the required packets using tshark 
+Following their `README` instructions, the first step is to extract the required packets using `tshark`.
 
-```
+```bash
 tshark -r ./klogger.pcapng -Y 'usb.capdata && usb.data_len == 8 && usb.src == 1.5.1' -T fields -e usb.capdata > usbPcapData
 ```
-- -r specifies the pcap file we want to work on.
-- -Y defines a display filter, in this case we are filtering for all the USB packets containing capdata where the data length in the header section is equal to 8, where the source is the device with ID 1.5.1.
-- -T fields specifies the actual fields we would like to extract from this packets, in this case the captured data only. 
+- `-r ./klogger.pcapng` : specifies the input `.pcapng` file.
+- `-Y 'usb.capdata && usb.data_len == 8 && usb.src == 1.5.1'` : filters packets that contain usb.capdata (keyboard data), have a data length of 8 bytes (keyboard HID reports), and priginate from device `1.5.1`.
+- `-T fields -e usb.capdata` : extracts only the captured USB keyboard data from the packets.
 
-Then I executed there script as they tellt to do.
+Then, I executed the TeamRocketIst script as instructed. 
 
-```
+```bash 
 python3 usbkeyboard.py usbPcapData
 ```
 
-Obtaining the following output : 
+This produced the following output:  
+![xxx](/assets/img/irisctf2025/forensics/deldeldel/flag.png){: w="500"}
 
-> Image
-
-Just because I am a lazy (or maybe efficient) programmer I decided to code a script automating the extraction and resolution part. You can find a look at the guide, or look the source code on my Github. 
+Since I like to optimize my workflow (some might say I’m lazy, I prefer "efficient"), I wrote a script to automate both extraction and decoding in a single step. You can look at the detailed guide or at the source code on my [GitHub](https://github.com/emree-1/tools).
 
 ## Conclusion
 
+And that’s how I successfully extracted the flag from the USB packet capture ! This was my first time analyzing USB protocol traffic, and I really enjoyed diving into it. Not only did I learn more about how USB devices communicate, but I also improved my `Wireshark` skills along the way.
+
+I hope to encounter more USB-based challenges in future CTFs—maybe involving mice movements or audio output.
+
+Thank you for reading my write-up! See you in the next one! 
 
 *emree1*
