@@ -6,16 +6,18 @@ order: 4
 
 
 ## TryHackMe
+- Top 3% users.
+- 112 completed Rooms.
+- 15 badges.  
 
+[**Profile**](https://tryhackme.com/r/p/emre1)
 
+## CTFtime 
+- 4 events in 2025.
+- Top 10 French teams.
+- Top 500 Worldwide.  
 
-<img src="https://tryhackme-badges.s3.amazonaws.com/emre1.png" alt="Your Image Badge" />{: .left }
-<br>
-<br>
-<br>
-<br>
-
-[**> See Profile**](https://tryhackme.com/r/p/emre1)
+[**Profile**](https://ctftime.org/user/212306)
 
 ## Certificates
 
