@@ -16,7 +16,7 @@ timezone:
 
 title: emree1 # the main title
 
-tagline: CTF lover and cybersecurity explorer. # it will display as the subtitle
+tagline: CTF player | DFIR | OSINT # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Sharing insights, challenges, and growth in the field of cybersecurity.

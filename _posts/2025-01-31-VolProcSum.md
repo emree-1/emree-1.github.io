@@ -1,5 +1,5 @@
 ---
-title: Tool - Volatility3 Process Summarizer
+title: Tool - VolProcSum
 date: 2025-01-30 18:00:00 +0100
 categories: [Tools, Forensics]
 tags: [tools, forensics, volatility3]
@@ -7,7 +7,7 @@ description: Summarizer for Volatility3's PsList and PsScan modules.
 author: <author_id>
 
 image:
-  path: /assets/img/tools/volatility3.png
+  path: /assets/img/tools/volprocsum.png
 ---
 
 ## Overview 
@@ -64,7 +64,7 @@ vol_ps_summary.py [FILE] -p or --parameters [PARAMETERS]
 ### Filter
 
 ```bash
-vol_ps_summary.py [FILE] --filter [QUERY]
+VolProcSum.py [FILE] --filter [QUERY]
 ``` 
 - **Utility** : Apply a filter to the results. `[QUERY]` uses the pandas query syntax and also supports the use of the Python `in` operator.
 - **Choices** : Queries are allowed on the values defined by the `d_parameters` in the `config.ini`. By default, the options include `name`, `time`, `ppid`, `pid` and `subp`.
@@ -73,7 +73,7 @@ vol_ps_summary.py [FILE] --filter [QUERY]
 ### Order
 
 ```bash
-vol_ps_summary.py [FILE] -o or --order [ORDER]
+VolProcSum.py [FILE] -o or --order [ORDER]
 ``` 
 - **Utility** : Orders the results based on the field specified by `[ORDER]`.
 - **Choices** : `[ORDER]` can be one of the values defined by the `d_parameters` in the `config.ini`. By default, the options include `name`, `time`, `ppid`, `pid` and `subp`.
@@ -82,7 +82,7 @@ vol_ps_summary.py [FILE] -o or --order [ORDER]
 ### Render
 
 ```bash
-vol_ps_summary.py [FILE] -r or --render [RENDER]
+VolProcSum.py [FILE] -r or --render [RENDER]
 ``` 
 - **Utility** : Change the output format.
 - **Choices** : `[RENDER]` can be one of the values defined by the `output_formats` in the `config.ini`. By default, the options include `txt`, `csv`, `json` and `tab`.
@@ -91,7 +91,7 @@ vol_ps_summary.py [FILE] -r or --render [RENDER]
 ### Save output
 
 ```bash
-vol_ps_summary.py [FILE] -e or --extract [OUTFILE]
+VolProcSum.py [FILE] -e or --extract [OUTFILE]
 ``` 
 - **Utility** : Saves the results to the file specified by `[OUTFILE]`. The output format follows the one defined by the render option.
 - **Default** : If no output file is specified, the results are printed to the standard output, unless the `--quiet` option is enabled.
@@ -100,28 +100,28 @@ vol_ps_summary.py [FILE] -e or --extract [OUTFILE]
 
 #### No space
 ```bash
-vol_ps_summary.py [FILE] --no_space
+VolProcSum.py [FILE] --no_space
 ``` 
 - **Utility** : Prevents spaces from being added at the beginning and end of the output. This can be useful when redirecting results. 
 - **Default** : By default, spaces are added for better readability in the standard output.
   
 #### No count
 ```bash
-vol_ps_summary.py [FILE] --no_count
+VolProcSum.py [FILE] --no_count
 ``` 
 - **Utility** : Prevents the count section from being printed at the end. This can be useful when redirecting results.
 - **Default** : By default, the count section is included, showing the total number of processes and the number of displayed processes. This behavior can be modified via the `d_count` parameter in `config.ini`.
 
 #### No index
 ```bash
-vol_ps_summary.py [FILE] --no_index
+VolProcSum.py [FILE] --no_index
 ``` 
 - **Utility** : Removes the index from CSV and JSON output formats.
 - **Default** : By default, the index is included.
 
 #### Table format
 ```bash
-vol_ps_summary.py [FILE] --tblfmt [TBLFMT]
+VolProcSum.py [FILE] --tblfmt [TBLFMT]
 ``` 
 - **Utility** : Modifies the table format of the output. 
 - **Choices** : Allowed values are those supported by the [`tabulate`](https://pypi.org/project/tabulate/) Python module.
@@ -132,7 +132,7 @@ vol_ps_summary.py [FILE] --tblfmt [TBLFMT]
 To better understand how it works, let's explore a concrete example. First, we'll run the script without specifying any options to observe the default output.
 
 ```bash
-vol_ps_summary.py test.csv
+VolProcSum.py test.csv
 
 # === OUTPUT ===
 
@@ -154,7 +154,7 @@ Total: 29
 As we can see, the script lists all the extracted information for each process. Some processes have no subprocesses, while others have many. To focus on those with at least one child process, we can apply a filter.
 
 ```bash
-vol_ps_summary.py test.csv --filter "subp > 0"
+VolProcSum.py test.csv --filter "subp > 0"
 
 # === OUTPUT ===
 
@@ -174,7 +174,7 @@ Total: 29
 Now, to improve clarity, we might want to order the results based on the number of subprocesses. Since I prefer an descending order, I'll invert the default sorting.
 
 ```bash
-vol_ps_summary.py test.csv --filter "subp > 0" -o subp
+VolProcSum.py test.csv --filter "subp > 0" -o subp
 
 # === OUTPUT ===
 
@@ -194,7 +194,7 @@ Total: 29
 I want to keep only the `name`, `pid`, and `subp` columns. Additionally, I don’t need the count section or extra spaces, so I’ll remove them.
 
 ```bash
-vol_ps_summary.py test.csv --filter "subp > 0" --order subp --inv_order --parameters name, pid, subp --no_count --no_space
+VolProcSum.py test.csv --filter "subp > 0" --order subp --inv_order --parameters name, pid, subp --no_count --no_space
 
 # === OUTPUT ===
 |     | Name         | PID  | Subprocesses |
@@ -209,7 +209,7 @@ vol_ps_summary.py test.csv --filter "subp > 0" --order subp --inv_order --parame
 At this point, we could directly redirect the output to a `.txt` file using a redirection operator like `>`. However, I ultimately want to export the results as a CSV file without the index.
 
 ```bash
-vol_ps_summary.py test.csv --filter "subp > 0" --order subp --inv_order --parameters name, pid, subp --no_count --no_space --no_index -r csv -e out.csv
+VolProcSum.py test.csv --filter "subp > 0" --order subp --inv_order --parameters name, pid, subp --no_count --no_space --no_index -r csv -e out.csv
 
 # CSV file
 name,pid,subp
