@@ -1,5 +1,5 @@
 ---
-title: Tool - New Year CTF 2025 - Broken QR
+title: New Year CTF 2025 - Forensics - Broken QR
 date: 2025-02-06 18:00:00 +0100
 categories: [CTFs, Forensics]
 tags: [ctfs, newyearctf2025, forensics]
@@ -22,7 +22,7 @@ image:
 
 ## Ressources
 
-![Broekn QR code given for the challenge](/assets/img/newyearctf2025/broken_qr/qrcode_broken.png){: .right w="150"}
+![Broken QR code given for the challenge](/assets/img/newyearctf2025/broken_qr/qrcode_broken.png){: .right w="150"}
 
 For this challenge, we are given an image of a QR code.
 
