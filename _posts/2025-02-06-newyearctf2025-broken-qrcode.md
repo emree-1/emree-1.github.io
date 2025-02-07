@@ -1,7 +1,7 @@
 ---
 title: New Year CTF 2025 - Forensics - Broken QR
 date: 2025-02-06 18:00:00 +0100
-categories: [CTFs, Forensics]
+categories: [CTFs, New Year CTF 2025]
 tags: [ctfs, newyearctf2025, forensics]
 description: A QR code lost… and found again.
 author: <author_id>
