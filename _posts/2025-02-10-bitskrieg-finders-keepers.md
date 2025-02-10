@@ -3,7 +3,7 @@ title: bitsCTF - Steganography - Finders Keepers
 date: 2025-02-10 8:00:00 +0100
 categories: [CTFs, bitsCTF]
 tags: [ctfs, bitsCTF, forensics]
-description: ...
+description: Weird.png isn’t just weird.
 author: <author_id>
 
 image:
