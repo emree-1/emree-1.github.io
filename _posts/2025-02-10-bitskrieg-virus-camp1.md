@@ -62,9 +62,35 @@ Examining the `extension.json` file associated with this extension, we found tha
 
 Next, we decided to dig deeper to understand the functionality of this extension. Navigating to the `C:\Users\<username>\.vscode\extensions\undefined_publisher.activate-0.0.1\out` directory, we located a JavaScript file named `extension.js`. This file appeared to contain the core logic of the extension.
 
-Upon a quick inspection of the file, we found a comment at the end that seemed to contain Base64-encoded data. 
+A quick inspection of the file reveals an interesting variable named `scriptContent`, which appears to contain obfuscated base64 data. Additionally, at the end of the JS file, we find a comment that also seems to hold Base64-encoded data.
 
 ![Base64-encoded data found in extension.js, potentially containing hidden information.](/assets/img/bitsCTF/forensics/virus-camp1/base64_flag.png){: w="700"}
+
+Another approach to locating the endoded flag was to use my variant-based keyword search tool, [KeyFind](https://emree-1.github.io/posts/KeyFind/), and search for a base64-encoded variant of the `CTF` keyword within the `.vscode` directory.
+
+```bash
+python3 KeyFind.py '\BITSCTF\DFIR\Virus Camp 1\dump\.vscode' -k BITSCTF bitsCTF BITS CTF ctf -v b64 
+
+  > KEYWORDS
+
+ QklUU0NU || Yml0c0NU || QklU || Q1 || Y3
+
+  > SUMMARY
+
+|     | keyword  | source        | count |
+| --- | -------- | ------------- | ----- |
+| 0   | QklUU0NU | b64 (BITSCTF) | 0     |
+| 1   | Yml0c0NU | b64 (bitsCTF) | 0     |
+| 2   | QklU     | b64 (BITS)    | 0     |
+| 3   | Q1       | b64 (CTF)     | 1     |
+| 4   | Y3       | b64 (ctf)     | 0     |
+
+Total : 1
+
+| line_num | keyword | result                          |
+| -------- | ------- | ------------------------------- |
+| 66       | Q1      | // VGhlIDFzdCBmbGFnIGlzOiBCS... |
+```
 
 After decoding the Base64 string, we obtained the following output:
 
