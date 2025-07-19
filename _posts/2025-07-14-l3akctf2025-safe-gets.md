@@ -161,10 +161,9 @@ Let’s clean up the decompiled code to better understand the logic:
 You see it, I saw it, we all saw it: the infamous `gets()` function. The binary is literally asking us to exploit it. `gets()` is notoriously unsafe: it reads user input into a buffer **without checking if the input fits**, leading directly to **buffer overflows**.
 
 <details class="my_details" markdown="1">
+<summary> What’s wrong with gets() ?</summary>
 
 ---   
-
-**What’s wrong with `gets()`**
 
 The `gets()` function reads input from `stdin` into a buffer, but doesn’t check the size of the buffer. That means if the user sends more data than the buffer can hold, the function will keep writing — **overwriting adjacent variables** or **even the return address** of the function on the stack.
 
@@ -182,9 +181,10 @@ Let’s figure out how many bytes we need to reach the return address. To get th
 
 ![main() function's start in assembly](/assets/img/l3akctf/pwn/safe_gets/main_assembly.png)  
 
-<details class="my_details" markdown="1">
+<details class="my_details">
+<summary>What does this assembly tell us ?</summary>
+<div class="content" markdown="1">
 ---
-**What does this assembly tell us?**
 
 One line in particular is important:
 
@@ -202,6 +202,8 @@ char user_message[259];  // 259 bytes
 ```
 
 Why `272` and not `259`? Because compilers often add padding to maintain **stack alignment** — typically a multiple of 16 bytes — which explains the discrepancy. The remaining 13 bytes are likely padding for alignment purposes.
+</div>
+
 </details>
 
 BUT! Remember the wrapper?
@@ -282,8 +284,8 @@ So `win()` is at `0x401262`. Next, we search for a **`ret` instruction**. These 
 We found a `ret` at `0x401261`. Now that we have both addresses, we’re ready to build the **final payload** and **write the exploit script** using `pwntools`.
 
 <details class="my_details" markdown="1">
+<summary> Why do we need a ret ?</summary>
 ---
-**Why do we need a ret?**  
 
 When using gadgets like `win()`, depending on the system and calling convention, we may need to adjust the stack for proper alignment. In 64-bit Linux, the `ret` gadget is often used to align the stack correctly before jumping to a function.
 </details>
