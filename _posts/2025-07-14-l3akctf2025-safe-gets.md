@@ -160,8 +160,10 @@ Let’s clean up the decompiled code to better understand the logic:
 
 You see it, I saw it, we all saw it: the infamous `gets()` function. The binary is literally asking us to exploit it. `gets()` is notoriously unsafe: it reads user input into a buffer **without checking if the input fits**, leading directly to **buffer overflows**.
 
-<details>
----
+<details class="my_details" markdown="1">
+
+---   
+
 **What’s wrong with `gets()`**
 
 The `gets()` function reads input from `stdin` into a buffer, but doesn’t check the size of the buffer. That means if the user sends more data than the buffer can hold, the function will keep writing — **overwriting adjacent variables** or **even the return address** of the function on the stack.
@@ -180,7 +182,7 @@ Let’s figure out how many bytes we need to reach the return address. To get th
 
 ![main() function's start in assembly](/assets/img/l3akctf/pwn/safe_gets/main_assembly.png)  
 
-<details>
+<details class="my_details" markdown="1">
 ---
 **What does this assembly tell us?**
 
@@ -279,7 +281,7 @@ So `win()` is at `0x401262`. Next, we search for a **`ret` instruction**. These 
 
 We found a `ret` at `0x401261`. Now that we have both addresses, we’re ready to build the **final payload** and **write the exploit script** using `pwntools`.
 
-<details>
+<details class="my_details" markdown="1">
 ---
 **Why do we need a ret?**  
 

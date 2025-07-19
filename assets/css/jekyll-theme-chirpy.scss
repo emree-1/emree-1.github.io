@@ -1,0 +1,29 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+.my_details {
+  border-left: 5px solid #4caf50; /* bandeau vert */
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 4px;
+  font-family: sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.my_details summary {
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+}
+
+.my_details summary:hover {
+  color: #388e3c;
+}

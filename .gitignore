@@ -25,3 +25,8 @@ package-lock.json
 # Misc
 _sass/vendors
 assets/js/dist
+
+# Posts
+_posts/2025-07-14-l3akctf2025-ghost-in-the-dark.md
+_posts/2025-07-14-l3akctf2025-babyrev.md
+
