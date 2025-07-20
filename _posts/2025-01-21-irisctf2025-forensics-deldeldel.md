@@ -30,7 +30,7 @@ For this challenge, we were given a `.pcapng` file named `klogger.pcapng`. Upon 
 We will primarily use `Wireshark` to analyze the `.pcapng` file.  
 Additionally, we will use custom `Python` scripts to parse and reconstruct keyboard strokes from the captured USB packets.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

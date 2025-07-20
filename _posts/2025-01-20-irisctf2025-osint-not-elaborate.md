@@ -36,7 +36,7 @@ As this is an OSINT challenge we won't need any tool to solve it. We will only n
 
 Since this is an OSINT challenge, we didn’t require any specialized tools. A simple web browser sufficed for our needs, I opted to use `Google Chrome`.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

@@ -41,7 +41,7 @@ The challenge began with a `.tar.gz` file, which, when extracted, revealed a sin
 
 To tackle this challenge, I opted for `Splunk’s` free version, as it offers a user-friendly graphical interface that simplifies the visual analysis and interpretation of logs. While I chose Splunk for its powerful features, I noticed that some participants used alternative tools, such as `jq`. These tools are lightweight and excellent for handling JSON data in CLI, but I preferred Splunk for its ability to provide insights at a glance through its visualizations.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

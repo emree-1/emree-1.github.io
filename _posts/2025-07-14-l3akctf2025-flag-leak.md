@@ -29,7 +29,7 @@ For this challenge, we were provided with access to a website named `L3ak's Blog
 
 I used `Burp Suite` to analyze `HTTP` **requests** and **responses** exchanged between the browser and the server. However, it’s very likely that the entire challenge could be completed using only the **browser’s developer tools**.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

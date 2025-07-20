@@ -34,7 +34,7 @@ Ce don’t need to install any additional software. However, we will be using [`
 
 Additionally, we will need an image editor to manually modify the QR code. In my case, I used `Microsoft Paint`, as I was working on a Windows machine while solving this challenge.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

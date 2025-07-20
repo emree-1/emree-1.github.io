@@ -29,7 +29,7 @@ To examine the `.ad1` file, we will use `FTK Imager`, and for further analysis, 
 
 While `FTK Imager` can handle the majority of tasks, I prefer `Autopsy` for its more advanced features and detailed investigative capabilities.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

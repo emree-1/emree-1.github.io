@@ -32,7 +32,7 @@ image:
 ## Tools 
 
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

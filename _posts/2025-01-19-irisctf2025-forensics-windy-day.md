@@ -27,7 +27,7 @@ For this challenge, we need to analyze a memory capture. To achieve this, we wil
 - [`Volatility3`](https://github.com/volatilityfoundation/volatility3) : an advanced memory forensic framework that allows us to extract artifacts, analyze processes, and detect anomalies in RAM dumps.
 - [`Custom forensic tools`](https://github.com/emree-1/tools) : I will also leverage some scripts I have developed to automate specific analysis tasks and extract relevant data more efficiently.
 
-## Resolution
+## Walkthrough
 
 I wasn't able to solve this challenge during the irisCTF 2025 event. I installed `Volatility3` and ran `PsScan` on the memory capture, but I struggled to determine the next steps. After reviewing some write-ups, I noticed that most solutions followed the same approach, rushing directly to the flag without a structured forensic methodology.  
 

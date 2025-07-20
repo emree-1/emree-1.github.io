@@ -32,7 +32,7 @@ For this challenge, we are given a `.ad1` file named `abc.ad1`.
 In this challenge, as we have a `.ad1` file, we will need [FTK Imager](https://www.exterro.com/ftk-product-downloads/ftk-imager-4-7-3-81) to analyse it.   
 `FTK Imager` is a powerful forensic imaging tool developed by AccessData, widely used in digital forensics to create exact, bit-for-bit copies of storage devices and thoroughly analyze the contents of these images.
 
-## Resolution
+## Walkthrough
 
 ### Installing FTK Imager
 

@@ -34,7 +34,7 @@ The article's description matched the challenge description. Additionally, we we
 
 We don’t need any sophisticated tools to solve this challenge; a web browser will suffice. In my case, I’ll be using **`Google Chrome`**.  
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

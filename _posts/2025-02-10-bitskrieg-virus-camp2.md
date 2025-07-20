@@ -27,7 +27,7 @@ For this challenge, we will be using the same `.ad1` disk image from the first [
 
 To examine the `.ad1` disk image, we will be using `FTK Imager`. However, the key tool we will need for this challenge is a good understanding of `PowerShell`.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

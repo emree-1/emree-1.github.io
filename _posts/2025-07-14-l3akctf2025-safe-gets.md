@@ -33,7 +33,7 @@ For this challenge, I will rely heavily on `gdb` to analyze the binary’s execu
 
 Other than that, we’ll mostly rely on our ***brain*** and **pwn knowledge**. Fortunately, I’ll explain each step in detail so anyone can follow along and learn from this challenge.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 

@@ -40,7 +40,7 @@ In this writeup, I will walk through my approach and the tools used during the p
 - `pngcheck`: utility that verifies the integrity of PNG images.
 - `HxD`: hex editor for Windows.
 
-## Resolution
+## Walkthrough
 
 ### Initial Analysis 
 
