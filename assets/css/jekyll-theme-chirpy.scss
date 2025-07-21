@@ -8,9 +8,29 @@
 {%- endif -%}
 ';
 
+// .my_details {
+//   border-left: 5px solid #04c904;
+//   padding: 1em;
+//   margin: 1em 0;
+//   border-radius: 4px;
+//   font-family: sans-serif;
+// }
+
+// .my_details summary {
+//   font-weight: bold;
+//   cursor: pointer;
+//   outline: none;
+//   list-style: none;
+// }
+
+// .my_details summary:hover {
+//   color: #04c904;
+// }
+
 .my_details {
   border-left: 5px solid #04c904;
-  padding: 1em;
+  background-color: rgba(4, 201, 4, 0.05);
+  padding: 0;
   margin: 1em 0;
   border-radius: 4px;
   font-family: sans-serif;
@@ -21,8 +41,41 @@
   cursor: pointer;
   outline: none;
   list-style: none;
+  padding: 1em;
+  transition: color 0.3s ease;
+}
+
+/* Supprime la flèche par défaut */
+.my_details summary::-webkit-details-marker {
+  display: none;
+}
+
+.my_details summary::before {
+  content: '▶';
+  color: #04c904;
+  font-size: 0.8em;
+  margin-right: 0.5em;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.my_details[open] summary::before {
+  transform: rotate(90deg);
 }
 
 .my_details summary:hover {
   color: #04c904;
+}
+
+/* Contenu du details */
+.my_details > *:not(summary) {
+  padding: 0 1em 1em 1em;
+}
+
+.content hr {
+  margin-top: 0%;
+}
+
+.content {
+  margin-top: 0%;
 }

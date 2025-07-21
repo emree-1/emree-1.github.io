@@ -19,7 +19,7 @@ image:
 > *By: White*
 {: .prompt-info }
 
-**Flag : L3AK{6375_15_4pp4r3n7ly_n3v3r_54f3}$**
+**Flag : L3AK{6375_15_4pp4r3n7ly_n3v3r_54f3}**
 
 ## Ressources
 
@@ -162,12 +162,12 @@ You see it, I saw it, we all saw it: the infamous `gets()` function. The binary 
 
 <details class="my_details" markdown="1">
 <summary> What’s wrong with gets() ?</summary>
-
----   
-
+<div class="content" markdown="1">
+---
 The `gets()` function reads input from `stdin` into a buffer, but doesn’t check the size of the buffer. That means if the user sends more data than the buffer can hold, the function will keep writing — **overwriting adjacent variables** or **even the return address** of the function on the stack.
 
 This vulnerability is called a **buffer overflow**, and it's one of the most classic exploitation vectors in binary exploitation. I’m planning to publish a dedicated article on this topic soon, so stay tuned!
+</div>
 </details>
 
 So we want to be able to overwrite the return adress that is placed at the begin of the stack to write in it the adresse of the `win()` so that we jump to it instead. To do so, we need to overwrite the complete buffer allocate for the `user_message` AND the space for `RBP`.
@@ -185,7 +185,6 @@ Let’s figure out how many bytes we need to reach the return address. To get th
 <summary>What does this assembly tell us ?</summary>
 <div class="content" markdown="1">
 ---
-
 One line in particular is important:
 
 ```
@@ -285,9 +284,10 @@ We found a `ret` at `0x401261`. Now that we have both addresses, we’re ready t
 
 <details class="my_details" markdown="1">
 <summary> Why do we need a ret ?</summary>
+<div class="content" markdown="1">
 ---
-
 When using gadgets like `win()`, depending on the system and calling convention, we may need to adjust the stack for proper alignment. In 64-bit Linux, the `ret` gadget is often used to align the stack correctly before jumping to a function.
+</div>
 </details>
 
 ### Final Exploit

@@ -25,26 +25,6 @@ image:
 
 **Flag : L3AK{d3let3d_but_not_forg0tt3n}**
 
-## Ressources
 
 
-
-## Tools 
-
-
-## Walkthrough
-
-### Initial Analysis 
-
-
-
-
-
-
-
-## Conclusion
-
-
-See you ! 
-
-*emree1*
+***Work in progress...***
